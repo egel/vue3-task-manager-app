@@ -1,11 +1,10 @@
-import { ref } from "vue";
 import { defineStore } from "pinia";
-import { Item } from "../services/api";
+import { Task } from "../services/api";
 
 /**
  * Define dummy initial list
  */
-function initStore(): Array<Item> {
+function initStore(): Array<Task> {
   return [
     {
       id: 1,
@@ -31,17 +30,17 @@ function initStore(): Array<Item> {
   ];
 }
 
-export const useItemsStore = defineStore("items", {
+export const useTasksStore = defineStore("tasks", {
   state: () => ({
-    items: initStore(),
+    tasks: initStore(),
   }),
   actions: {
-    addItem(item: Item) {
-      this.items.push(item);
+    addTask(task: Task) {
+      this.tasks.push(task);
     },
-    deleteItem(itemID: number) {
-      this.items = this.items.filter((object: Item) => {
-        return object.id !== itemID;
+    deleteTask(taskId: number) {
+      this.tasks = this.tasks.filter((object: Task) => {
+        return object.id !== taskId;
       });
     },
   },

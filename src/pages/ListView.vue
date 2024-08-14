@@ -1,11 +1,13 @@
+/**
+ * TODO: extract th to separate component (DRY rule)
+ */
 <template>
-  <h1>List page</h1>
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
         <th @click="sort('title')">Title {{ sortArrow('title')}}</th>
         <th @click="sort('description')">Description {{ sortArrow('description') }} </th>
-        <th @click="sort('dueDate')" >Due Date {{  sortArrow('dueDate') }}</th>
+        <th @click="sort('dueDate')" >Due Date {{ sortArrow('dueDate') }}</th>
         <th @click="sort('status')">Status {{ sortArrow('status') }}</th>
       </tr>
     </thead>
@@ -22,19 +24,19 @@
 </template>
 
 <script lang="ts">
-import { useItemsStore, initStore} from '../store/items'
+import { useTasksStore, initStore} from '../store/tasks'
 import { storeToRefs } from "pinia";
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   data() {
-    const itemsStore = useItemsStore();
-    const { items } = storeToRefs(itemsStore);
+    const tasksStore = useTasksStore();
+    const { tasks } = storeToRefs(tasksStore);
     const sortBy = ref(void 0)
     const sortOrder = ref(1)
 
     return {
-      items,
+      tasks,
       sortBy,
       sortOrder,
     }
@@ -45,7 +47,7 @@ export default defineComponent({
      * Return sorted list
      */
     sortedList () {
-      return [...this.items].sort((a, b) => {
+      return [...this.tasks].sort((a, b) => {
         if (a[this.sortBy] >= b[this.sortBy]) {
           return this.sortOrder
         }

@@ -8,9 +8,9 @@
             class="nav-link"
             to="/"
             :name="list"
-            :aria-label="List"
+            :aria-label="list"
           >
-            List
+            Task List
           </AppLink>
         </li>
 

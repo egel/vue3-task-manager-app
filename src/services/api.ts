@@ -4,7 +4,7 @@
 // definition of API interfaces & types
 //
 
-export interface Item {
+export interface Task {
   id: number; // simply for demo purpose, best use string with something like uuid
   title: string;
   description: string;
