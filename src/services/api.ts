@@ -9,5 +9,5 @@ export interface Item {
   title: string;
   description: string;
   dueDate: string;
-  status: string;
+  status: "pending" | "in progress" | "completed";
 }
