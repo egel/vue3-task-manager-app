@@ -13,6 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
@@ -25,7 +31,6 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -59,10 +64,19 @@ button:focus-visible {
 }
 
 #app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+  /**
+   * simply stretch main container for the pages
+   */
+  main {
+    flex: 1;
+  }
 }
 
 @media (prefers-color-scheme: light) {
