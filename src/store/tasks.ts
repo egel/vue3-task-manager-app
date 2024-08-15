@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Task } from "../services/api";
+import { Task, TaskUpsertForm } from "../services/api";
 
 /**
  * Define dummy initial list
@@ -35,8 +35,8 @@ export const useTasksStore = defineStore("tasks", {
     tasks: initStore(),
   }),
   actions: {
-    addTask(task: Task) {
-      this.tasks.push(task);
+    addTask(task: TaskUpsertForm) {
+      this.tasks.push(task as Task);
     },
     deleteTask(taskId: number) {
       this.tasks = this.tasks.filter((object: Task) => {

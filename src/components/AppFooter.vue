@@ -12,6 +12,3 @@
   width: 100%;
 }
 </style>
-
-<script lang="ts">
-</script>

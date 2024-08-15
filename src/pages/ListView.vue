@@ -1,5 +1,6 @@
 /**
  * TODO: extract th to separate component (DRY rule)
+ * TODO: extract form to separate component (best practice to reuse it)
  */
 <template>
   <table class="table table-striped table-bordered">
@@ -9,6 +10,7 @@
         <th @click="sort('description')">Description {{ sortArrow('description') }} </th>
         <th @click="sort('dueDate')" >Due Date {{ sortArrow('dueDate') }}</th>
         <th @click="sort('status')">Status {{ sortArrow('status') }}</th>
+        <th>Action</th>
       </tr>
     </thead>
 
@@ -18,27 +20,60 @@
         <td>{{i.description}}</td>
         <td>{{ formatDate(i.dueDate)}}</td>
         <td>{{i.status}}</td>
+        <td>
+          <button @click="deleteTask(i.id)">✖</button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+  <form v-if="addNewTask" @submit.prevent="submitForm" class="task-form">
+    <input v-model="form.title" type="text" placeholder="Title" />
+    <input v-model="form.description" type="text" placeholder="Description" />
+    <input v-model="form.dueDate" type="date" placeholder="Due Date" />
+    <select v-model="form.status">
+      <option checked @click="selectStatus(void 0)">Not Selected</option>
+      <option v-for="o in statusOptions" :key="o.id" :value="o">{{ o }}</option>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+
+  <button v-if="!addNewTask" @click="toggleAddTask()">Add new task</button>
 </template>
 
 <script lang="ts">
-import { useTasksStore, initStore} from '../store/tasks'
+import { useTasksStore, initStore,} from '../store/tasks'
 import { storeToRefs } from "pinia";
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
+import { TaskStatusType, TaskStatus } from '../services/api.ts'
+import { useVuelidate } from '@vuelidate/core'
+import { required, minLength } from '@vuelidate/validators'
 
 export default defineComponent({
-  data() {
+  setup() {
     const tasksStore = useTasksStore();
     const { tasks } = storeToRefs(tasksStore);
     const sortBy = ref(void 0)
     const sortOrder = ref(1)
+    const addNewTask = ref(false)
+    const form = reactive({
+      title: '',
+      description: '',
+      dueDate: void 0,
+      status: void 0,
+    })
+
+    const statusOptions: TaskStatusType = Object.values(TaskStatus)
 
     return {
       tasks,
+      tasksStore,
       sortBy,
       sortOrder,
+      addNewTask,
+
+      form,
+      statusOptions,
     }
   },
 
@@ -61,10 +96,18 @@ export default defineComponent({
      * Formatting date to simple long output
      */
     formatDate(dateString): string {
-      const date = new Date(dateString);
-
-      // Then specify how you want your dates to be formatted
+      const date: Date = new Date(dateString);
       return new Intl.DateTimeFormat('default', {dateStyle: 'long'}).format(date);
+    },
+
+    /**
+     * Convert Date object to ISOString
+     */
+    convertDateToISOString(date: Date | undefined): string {
+      const now = Date.now()
+      // when undefined use current time
+      const newDate: Date = date ? new Date(date) : new Date(now)
+      return newDate.toISOString()
     },
 
     /**
@@ -78,7 +121,6 @@ export default defineComponent({
       this.sortBy = sortBy
     },
 
-
     /**
      * Return sorting sign
      */
@@ -88,6 +130,47 @@ export default defineComponent({
       } else {
         return ''
       }
+    },
+
+    /**
+     * Toggle showing form for adding new task
+     */
+    toggleAddTask(): void {
+      this.addNewTask = !this.addNewTask
+    },
+
+    /**
+     * Clean and add task to the list
+     */
+    addTask(): void {
+      // convert Date to ISOString before adding to list
+      this.form.dueDate = this.convertDateToISOString(this.form.dueDate)
+      this.tasksStore.addTask(this.form)
+    },
+
+    /**
+     * Select status for form adding new task
+     */
+    selectStatus(status: TaskStatusType | undefined) {
+      this.form.status = status
+    },
+
+    /**
+     * Execute submit form
+     */
+    submitForm(): void {
+      // TODO: when needed enhance here form validation to check min/max/required ect.
+      if (this.form) {
+        this.addTask(this.form)
+        this.toggleAddTask()
+      }
+    },
+
+    /**
+     * Remove task from the list
+     */
+    deleteTask(taskId: number): void {
+      this.tasksStore.deleteTask(taskId)
     }
   }
 })
