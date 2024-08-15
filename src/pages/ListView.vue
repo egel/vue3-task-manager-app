@@ -59,12 +59,17 @@ export default defineComponent({
     const sortBy = ref(void 0)
     const sortOrder = ref(1)
     const addNewTask = ref(false)
-    const form = reactive({
+
+    const getInitialFormData = () => ({
       title: '',
       description: '',
       dueDate: void 0,
-      status: void 0,
+      status: taskStatus.Pending,
     })
+
+    const form = reactive(getInitialFormData())
+
+    const resetUserForm = () => Object.assign(form, getInitialFormData())
 
     const statusOptions: TaskStatusType = Object.values(TaskStatus)
 
@@ -76,6 +81,7 @@ export default defineComponent({
       sortBy,
       sortOrder,
       addNewTask,
+      resetUserForm,
 
       form,
       statusOptions,
@@ -167,6 +173,7 @@ export default defineComponent({
       // TODO: when needed enhance here form validation to check min/max/required ect.
       if (this.form) {
         this.addTask(this.form)
+        this.resetUserForm()
         this.toggleAddTask()
       }
     },
