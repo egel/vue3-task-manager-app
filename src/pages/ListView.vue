@@ -177,7 +177,6 @@ export default defineComponent({
     deleteTask(taskId: number): void {
       this.tasksStore.deleteTask(taskId)
     }
-
   }
 })
 </script>

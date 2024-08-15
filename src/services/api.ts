@@ -14,7 +14,7 @@ export const TaskStatus = {
 export type TaskStatusType = (typeof TaskStatus)[keyof typeof TaskStatus];
 
 export interface Task {
-  id: number; // simply for demo purpose, best use string with something like uuid
+  id: string;
   title: string;
   description: string;
   dueDate: string;
