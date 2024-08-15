@@ -1,9 +1,16 @@
 /**
+ * best practces (outside of the given demo example)
+ *
  * TODO: extract th to separate component (DRY rule)
  * TODO: extract form to separate component (best practice to reuse it)
+ * TODO: I created simple table due to lack of time before send the final task.
+ *       To provide best user experiance while editing the rows in mobile view,
+ *       there would be few ways to achieve:
+ *       - create editable row so text is replaced with inputs and add save btn
+ *       - or pack edit form in dialog so the user does not need to scroll.
  */
 <template>
-  <table class="table table-striped table-bordered">
+  <table class="table" id="no-more-tables">
     <thead>
       <tr>
         <th @click="sort('title')">Title {{ sortArrow('title')}}</th>
@@ -16,11 +23,11 @@
 
     <tbody tag="tbody" name="list" is="vue:transition-group">
       <tr v-for="i in sortedList" :key="i.id">
-        <td>{{i.title}}</td>
-        <td>{{i.description}}</td>
-        <td>{{ formatDate(i.dueDate)}}</td>
-        <td>{{i.status}}</td>
-        <td>
+        <td data-title="Title">{{i.title}}</td>
+        <td data-title="Description">{{i.description}}</td>
+        <td data-title="Due Date">{{ formatDate(i.dueDate)}}</td>
+        <td data-title="Status">{{i.status}}</td>
+        <td data-title="Actions" class="action-buttons">
           <Button
             class="color-danger"
             @click="tasksStore.deleteTask(i.id)"
@@ -115,6 +122,112 @@
 .list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+
+
+/* responsive table */
+table {
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background: #1F1F1F
+}
+tr:nth-child(odd) {
+  background: #282828
+}
+
+th {
+  text-align: left;
+  padding: 10px;
+  background-color: #1c1c1c;
+}
+
+td {
+  min-width: 150px;
+  white-space: wrap;
+  vertical-align: top;
+  padding: 10px;
+}
+td.action-buttons {
+  min-width: 200px;
+}
+td.action-buttons button {
+  margin-right: 5px;
+}
+
+
+@media only screen and (max-width: 800px) {
+  /* Force table to not be like tables anymore */
+  #no-more-tables table,
+  #no-more-tables thead,
+  #no-more-tables tbody,
+  #no-more-tables th,
+  #no-more-tables td,
+  #no-more-tables tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  #no-more-tables thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  #no-more-tables tr {
+    border: 1px solid #666;
+    width: 100%;
+  }
+
+  #no-more-tables td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #666;
+    position: relative;
+    padding-left: 40%;
+    white-space: normal;
+    text-align:left;
+  }
+
+  #no-more-tables td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align:left;
+    font-weight: bold;
+
+    button {
+      margin-bottom: 20px;
+    }
+  }
+
+  /* Label the data */
+  #no-more-tables td:before { content: attr(data-title); }
+
+  /* override for nice table output */
+  table {
+    width: 100% !important;
+  }
+
+  tr:nth-child(even) {
+    background: #282828
+  }
+  tr:nth-child(odd) {
+    background: #1F1F1F
+  }
+
+  td {
+    min-height: 40px;
+  }
+  td button {
+    margin-right: 10px;
+  }
 }
 </style>
 
