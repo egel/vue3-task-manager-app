@@ -1,48 +1,64 @@
+<script lang="ts">
+// import {defineProps, defineSlots} from 'vue'
+
+export default {
+  props: {
+    type: String,
+    title: String,
+    backgroundColor: {
+      type:String,
+      default: "#282828"
+    },
+    fontColor: {
+      type: String,
+      default: "#f1f1f1"
+    },
+    onClick: Function,
+  },
+}
+</script>
+
 <template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }} </button>
+  <button
+    class="button"
+    :style="{ 'background-color': backgroundColor, 'color': fontColor}"
+    :type="type"
+    :title="title"
+    @click="onClick"
+  >
+    <slot>Button</slot>
+  </button>
 </template>
 
-<script lang="ts" setup>
-import './button.css';
-import { computed } from 'vue';
+<style scoped>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-const props = withDefaults(defineProps<{
-  /**
-   * The label of the button
-   */
-  label: string,
-  /**
-   * primary or secondary button
-   */
-  primary?: boolean,
-  /**
-   * size of the button
-   */
-  size?: 'small' | 'medium' | 'large',
-  /**
-   * background color of the button
-   */
-  backgroundColor?: string,
+button {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-}>(), { primary: false });
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  color: #f1f1f1;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+</style>
 
-const emit = defineEmits<{
-  (e: 'click', id: number): void;
-}>();
-
-const classes = computed(() => ({
-  'storybook-button': true,
-  'storybook-button--primary': props.primary,
-  'storybook-button--secondary': !props.primary,
-  [`storybook-button--${props.size || 'medium'}`]: true,
-}));
-
-const style = computed(() => ({
-  backgroundColor: props.backgroundColor
-}));
-
-const onClick = () => {
-  emit("click", 1)
-};
-
-</script>
