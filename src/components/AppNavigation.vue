@@ -15,7 +15,7 @@
         </li>
 
         <li class="nav-item" >
-          <RouterLink to="/task-management">Task management</RouterLink>
+          <RouterLink to="/other">Other page</RouterLink>
         </li>
       </ul>
     </nav>

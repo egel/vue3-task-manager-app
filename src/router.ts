@@ -4,14 +4,14 @@ export type AppRouteNames = "list" | "task-managment";
 
 export const routes: RouteRecordRaw[] = [
   {
-    name: "list",
+    name: "task-list",
     path: "/",
-    component: () => import("./pages/ListView.vue"),
+    component: () => import("./pages/TaskList.vue"),
   },
   {
-    name: "task-managment",
-    path: "/task-management",
-    component: () => import("./pages/TaskManagement.vue"),
+    name: "other",
+    path: "/other",
+    component: () => import("./pages/Other.vue"),
   },
 ];
 
