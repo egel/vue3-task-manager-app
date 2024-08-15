@@ -7,8 +7,8 @@
           <AppLink
             class="nav-link"
             to="/"
-            :name="list"
-            :aria-label="list"
+            :name="'List'"
+            :aria-label="'List'"
           >
             Task List
           </AppLink>
