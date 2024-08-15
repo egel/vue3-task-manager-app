@@ -1,5 +1,20 @@
-# Vue 3 + TypeScript + Vite
+# Task Manager
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Simple appliaction to manage your tasks.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+- [full list of requirements](<./docs/assets/Take-Home_Assignment_for_Senior_Frontend_Developer_(Vue_3).pdf>)
+
+## Setup
+
+### Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Storybook
+
+```bash
+npm run storybook
+```
