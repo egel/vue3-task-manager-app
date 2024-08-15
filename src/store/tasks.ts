@@ -34,8 +34,8 @@ function initStore(): Array<Task> {
  * Generate random id
  *
  * This is simple random ID generator for demo purposes. better use something
- * more solid like UUID, or send only data to backend and let backend generate
- * proper ID (depend on business requirements)
+ * more solid like UUID, or send only the data to the backend and then let
+ * backend to generate proper ID (depend on business requirements)
  */
 function generateRandomId(): string {
   return Math.random().toString(16).toString();
@@ -52,6 +52,10 @@ export const useTasksStore = defineStore("tasks", {
         id: generateRandomId(),
       };
       this.tasks.push(task);
+    },
+    updateTask(task: Task) {
+      const idx = this.tasks.findIndex((t: Task) => t.id == task.id);
+      this.tasks[idx] = Object.assign({}, task);
     },
     deleteTask(taskId: string) {
       this.tasks = this.tasks.filter((object: Task) => {

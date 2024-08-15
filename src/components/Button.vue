@@ -1,22 +1,29 @@
-<script setup lang="ts">
+<script lang="ts">
 import {defineProps} from 'vue'
 
-defineProps({
-  type: {
-    type: String,
-    required: true
-  },
-  onClick: {
-    type: Function,
-    required: false
+export default {
+  props: {
+    type: {
+      type: String,
+      default: 'button'
+    },
+    title: {
+      type: String,
+      default: ''
+    },
+    onClick: {
+      type: Function,
+      required: false
+    }
   }
-})
+}
 </script>
 
 <template>
   <button
     class="button"
     :type="type"
+    :title="title"
     @click="onClick"
   >
     <slot>Button</slot>
