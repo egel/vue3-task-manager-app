@@ -28,6 +28,7 @@
   outline: none;
   height: 32px;
   line-height: 32px;
+  font-size: 1em;
 }
 
 .custom-select .selected {

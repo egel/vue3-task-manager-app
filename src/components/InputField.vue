@@ -24,6 +24,10 @@ input:hover {
   border-color: #646cff;
 }
 
+input:placeholder {
+  font-size: 1em;
+}
+
 input:focus,
 input:active,
 input:focus-visible {

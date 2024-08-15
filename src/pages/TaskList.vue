@@ -8,6 +8,7 @@
  *       there would be few ways to achieve:
  *       - create editable row so text is replaced with inputs and add save btn
  *       - or pack edit form in dialog so the user does not need to scroll.
+ * TODO: remove text duplication and use translation strings (DRY rule)
  */
 <template>
   <div class="actions-ribbon">
@@ -59,7 +60,7 @@
       <form @submit.prevent="submitFormEditTask" class="task-form">
         <InputField v-model="form.title" type="text" name="Title" />
         <InputField v-model="form.description" type="text" name="Description" />
-        <input v-model="form.dueDate" type="date" placeholder="Due Date" />
+        <InputField v-model="form.dueDate" type="date" name="Due Date" />
         <SelectField
           :options="statusOptions"
           class="select"
@@ -79,7 +80,7 @@
       <form @submit.prevent="submitFormNewTask" class="task-form">
         <InputField v-model="form.title" type="text" name="Title" />
         <InputField v-model="form.description" type="text" name="Description" />
-        <input v-model="form.dueDate" type="date" placeholder="Due Date" />
+        <InputField v-model="form.dueDate" type="date" name="Due Date" />
         <SelectField
           :options="statusOptions"
           :default="statusOptions.Pending"
@@ -115,6 +116,10 @@
   min-width: 200px;
   width: 100%;
   max-width: 450px;
+}
+
+.task-form .action-buttons button {
+  margin-right: 10px;
 }
 
 /* transitions */
