@@ -14,7 +14,7 @@
       </tr>
     </thead>
 
-    <tbody>
+    <tbody tag="tbody" name="list" is="vue:transition-group">
       <tr v-for="i in sortedList" :key="i.id">
         <td>{{i.title}}</td>
         <td>{{i.description}}</td>
@@ -42,42 +42,46 @@
     </tbody>
   </table>
 
-  <div v-if="editTask">
-    <h2>Edit Task</h2>
-    <form @submit.prevent="submitFormEditTask" class="task-form">
-      <InputField v-model="form.title" type="text" name="Title" />
-      <InputField v-model="form.description" type="text" name="Description" />
-      <input v-model="form.dueDate" type="date" placeholder="Due Date" />
-      <SelectField
-        :options="statusOptions"
-        class="select"
-        @input="(e) => onSelectStatus(e)"
-      />
-      <div class="action-buttons">
-        <Button type="button" @click="cancelForm()">Cancel</Button>
-        <Button type="submit">Update</Button>
-      </div>
-    </form>
-  </div>
+  <transition>
+    <div v-if="editTask">
+      <h2>Edit Task</h2>
+      <form @submit.prevent="submitFormEditTask" class="task-form">
+        <InputField v-model="form.title" type="text" name="Title" />
+        <InputField v-model="form.description" type="text" name="Description" />
+        <input v-model="form.dueDate" type="date" placeholder="Due Date" />
+        <SelectField
+          :options="statusOptions"
+          class="select"
+          @input="(e) => onSelectStatus(e)"
+        />
+        <div class="action-buttons">
+          <Button type="button" @click="cancelForm()">Cancel</Button>
+          <Button type="submit">Update</Button>
+        </div>
+      </form>
+    </div>
+  </transition>
 
-  <div v-if="addNewTask">
-    <h2>New Task</h2>
-    <form @submit.prevent="submitFormNewTask" class="task-form">
-      <InputField v-model="form.title" type="text" name="Title" />
-      <InputField v-model="form.description" type="text" name="Description" />
-      <input v-model="form.dueDate" type="date" placeholder="Due Date" />
-      <SelectField
-        :options="statusOptions"
-        :default="statusOptions.Pending"
-        class="select"
-        @input="(e) => onSelectStatus(e)"
-      />
-      <div class="action-buttons">
-        <Button type="button" @click="cancelForm()">Cancel</Button>
-        <Button type="submit" >Add</Button>
-      </div>
-    </form>
-  </div>
+  <transition>
+    <div v-if="addNewTask">
+      <h2>New Task</h2>
+      <form @submit.prevent="submitFormNewTask" class="task-form">
+        <InputField v-model="form.title" type="text" name="Title" />
+        <InputField v-model="form.description" type="text" name="Description" />
+        <input v-model="form.dueDate" type="date" placeholder="Due Date" />
+        <SelectField
+          :options="statusOptions"
+          :default="statusOptions.Pending"
+          class="select"
+          @input="(e) => onSelectStatus(e)"
+        />
+        <div class="action-buttons">
+          <Button type="button" @click="cancelForm()">Cancel</Button>
+          <Button type="submit" >Add</Button>
+        </div>
+      </form>
+    </div>
+  </transition>
 
   <Button v-if="!addNewTask && !editTask" @click="toggleAddTask()">New Task</Button>
 </template>
@@ -90,6 +94,27 @@
   min-width: 200px;
   width: 100%;
   max-width: 450px;
+}
+
+/* transitions */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
 }
 </style>
 
