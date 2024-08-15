@@ -21,7 +21,8 @@
         <td>{{ formatDate(i.dueDate)}}</td>
         <td>{{i.status}}</td>
         <td>
-          <button @click="deleteTask(i.id)">✖</button>
+          <button class="color-danger" @click="tasksStore.deleteTask(i.id)">✖</button>
+          <button v-if="i.status != taskStatus.Completed" class="color-success" @click="tasksStore.completeTask(i.id)">✓</button>
         </td>
       </tr>
     </tbody>
@@ -53,6 +54,8 @@ export default defineComponent({
   setup() {
     const tasksStore = useTasksStore();
     const { tasks } = storeToRefs(tasksStore);
+    const taskStatus = TaskStatus
+
     const sortBy = ref(void 0)
     const sortOrder = ref(1)
     const addNewTask = ref(false)
@@ -68,6 +71,8 @@ export default defineComponent({
     return {
       tasks,
       tasksStore,
+      taskStatus,
+
       sortBy,
       sortOrder,
       addNewTask,
@@ -172,6 +177,7 @@ export default defineComponent({
     deleteTask(taskId: number): void {
       this.tasksStore.deleteTask(taskId)
     }
+
   }
 })
 </script>

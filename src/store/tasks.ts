@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Task, TaskUpsertForm } from "../services/api";
+import { Task, TaskStatus, TaskUpsertForm } from "../services/api";
 
 /**
  * Define dummy initial list
@@ -42,6 +42,10 @@ export const useTasksStore = defineStore("tasks", {
       this.tasks = this.tasks.filter((object: Task) => {
         return object.id !== taskId;
       });
+    },
+    completeTask(taskId: number): void {
+      const idx = this.tasks.findIndex((task: Task) => task.id == taskId);
+      this.tasks[idx].status = TaskStatus.Completed;
     },
   },
 });
