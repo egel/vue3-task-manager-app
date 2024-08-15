@@ -10,6 +10,10 @@
  *       - or pack edit form in dialog so the user does not need to scroll.
  */
 <template>
+  <div class="actions-ribbon">
+    <Button v-if="!addNewTask && !editTask" @click="toggleAddTask()">New Task</Button>
+  </div>
+
   <table class="table" id="no-more-tables">
     <thead>
       <tr>
@@ -89,11 +93,21 @@
       </form>
     </div>
   </transition>
-
-  <Button v-if="!addNewTask && !editTask" @click="toggleAddTask()">New Task</Button>
 </template>
 
 <style scoped>
+
+.actions-ribbon {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  column-gap: 10px;
+  background-color: transparent;
+  width: 100%;
+  min-height: 42px;
+  margin-bottom: 20px;
+}
+
 .task-form {
   display: flex;
   flex-direction: column;
