@@ -11,21 +11,30 @@
 
 <style scoped>
 input {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
   padding: 7px 4px;
   border: 1px solid #666666;
   border-radius: 6px;
   font-size: 1em;
+  color: #f1f1f1;
+  text-align: left;
   background-color: #282828;
   transition: border-color 0.25s;
   width: 100%;
+  color-scheme: dark;
 }
 
 input:hover {
   border-color: #646cff;
 }
 
-input:placeholder {
+input:placeholder,
+input::placeholder {
   font-size: 1em;
+  color: #666;
 }
 
 input:focus,
@@ -40,9 +49,12 @@ input:focus-visible {
 import { defineProps, defineEmits } from "vue";
 
 defineProps<{
-  modelValue: string;
+  modelValue: string,
   name: string;
-  type: string;
+  type: {
+    type: string,
+    default: 'text',
+  }
 }>();
 
 defineEmits(["update:modelValue"]);

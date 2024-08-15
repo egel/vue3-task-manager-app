@@ -257,9 +257,9 @@ import { defineComponent, ref, reactive } from 'vue'
 import { TaskStatusType, TaskStatus } from '../services/api.ts'
 import { useVuelidate } from '@vuelidate/core'
 import { required, minLength } from '@vuelidate/validators'
-import InputField from '../components/InputField.vue'
-import Button from '../components/Button.vue'
-import SelectField from '../components/SelectField.vue'
+import InputField from '../stories/InputField.vue'
+import Button from '../stories/Button.vue'
+import SelectField from '../stories/SelectField.vue'
 
 export default defineComponent({
   components: {
@@ -283,7 +283,7 @@ export default defineComponent({
       id: '',
       title: '',
       description: '',
-      dueDate: void 0,
+      dueDate: '',
       status: taskStatus.Pending,
     })
 
