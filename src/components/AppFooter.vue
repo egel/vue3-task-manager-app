@@ -1,6 +1,6 @@
 <template>
     <footer class="app-footer">
-        Project created for Mangopay recruitment process
+        Project created for recruitment process.
     </footer>
 </template>
 
